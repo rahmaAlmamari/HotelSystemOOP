@@ -9,7 +9,8 @@ namespace HotelSystemOOP
     class Room
     {
         //1. class fields ...
-        public static int RoomNumber = 0;
+        private static int RoomCounter = 0;
+        public int RoomNumber;
         public double RoomDailyPrice;
         public bool IsAvailable = true;
 
@@ -24,7 +25,7 @@ namespace HotelSystemOOP
             //to check if there are no rooms available ...
             if (Program.HotelRooms.Count == 0)
             {
-                Console.WriteLine("No rooms available.");
+                Console.WriteLine("No rooms available in the system yet.");
                 return false;
             }
             return true;
@@ -77,9 +78,10 @@ namespace HotelSystemOOP
 
         //=====================================================================
         //4. class constructors ...
-        public Room()
+        public Room() 
         {
-            RoomNumber++;
+            RoomCounter++;
+            RoomNumber = RoomCounter; // Assign a unique room number
         }
     }
 }
