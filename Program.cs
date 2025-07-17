@@ -42,6 +42,7 @@
                         Guest.ViewAllReservations();
                         break;
                     case '5':
+                        Guest.SearchReservationByGuestName();
                         break;
                     case '6':
                         break;
