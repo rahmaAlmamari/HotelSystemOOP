@@ -36,6 +36,7 @@
                         Room.ViewAllRooms();
                         break;
                     case '3':
+                        Guest.ReserveRoomForGuest();
                         break;
                     case '4':
                         break;
