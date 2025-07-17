@@ -22,9 +22,9 @@ namespace HotelSystemOOP
             return Regex.IsMatch(input, "^[a-zA-Z]+$");
         }
         //3. WelcomeMessage method ...
-        public static void WelcomeMessage()
+        public static void WelcomeMessage(string message)
         {
-            Console.WriteLine("Welcome to Codeline Bank System\nWe hope you have a pleasant time using our services " +
+            Console.WriteLine($"Welcome to Codeline {message} System\nWe hope you have a pleasant time using our services " +
                               "(^0^)");
             HoldScreen();//to hold the screen ...
         }
