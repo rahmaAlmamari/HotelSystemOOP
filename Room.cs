@@ -12,8 +12,23 @@ namespace HotelSystemOOP
         public static int RoomNumber = 0;
         public double RoomDailyPrice;
         public bool IsAvailable = true;
+
+        //======================================================================
         //2. class properties ...
+
+        //======================================================================
         //3. class methods ...
+        //to check if their are rooms in the system or not ...
+        public static bool AreRoomsAvailable()
+        {
+            //to check if there are no rooms available ...
+            if (Program.HotelRooms.Count == 0)
+            {
+                Console.WriteLine("No rooms available.");
+                return false;
+            }
+            return true;
+        }
         //to add a new room ...
         public static void AddNewRoom()
         {
@@ -29,9 +44,9 @@ namespace HotelSystemOOP
         public static void ViewAllRooms()
         {
             //to check if there are no rooms available ...
-            if (Program.HotelRooms.Count == 0)
+            if(!AreRoomsAvailable())
             {
-                Console.WriteLine("No rooms available.");
+                Additional.HoldScreen();//to hold the screen ...
                 return;
             }
             //to list all rooms ...
@@ -59,6 +74,8 @@ namespace HotelSystemOOP
                    $"Room Daily Price: {RoomDailyPrice}\n" +
                    $"Room Is Available: {IsAvailable}\n";
         }
+
+        //=====================================================================
         //4. class constructors ...
         public Room()
         {
