@@ -14,6 +14,9 @@ namespace HotelSystemOOP
         public int GuestPhoneNumber;
         public int NumberOfNights;
         public Room GuestRoom;
+        public double TotalCosts;
+
+        //=======================================================
         //2. class properties ...
         public int P_GuestPhoneNumber
         {
@@ -27,7 +30,20 @@ namespace HotelSystemOOP
                     Console.WriteLine("Phone number must be 8 digits.");
             }
         }
+
+        //=======================================================
         //3. class methods ...
+        //to check if their are reserve in the system or not ...
+        public static bool GetReserve()
+        {
+            //to check if there are no reserve available ...
+            if (Program.HotelGuests.Count == 0)
+            {
+                Console.WriteLine("No reserve available in the system yet.");
+                return false;
+            }
+            return true;
+        }
         //to reserve a room for a guest ...
         public static void ReserveRoomForGuest()
         {
@@ -59,10 +75,48 @@ namespace HotelSystemOOP
             
             //to reserve the room for the guest ...
             newGuest.GuestRoom.IsAvailable = false;
+            //to get total cost ...
+            newGuest.TotalCosts = newGuest.NumberOfNights * newGuest.GuestRoom.RoomDailyPrice;
+            //to save the reserve to HotelGuest list ...
             Program.HotelGuests.Add(newGuest);
-            Console.WriteLine($"Room {newGuest.GuestRoom.RoomNumber} reserved for {newGuest.GuestName} successfully.");
+            Console.WriteLine($"Room {newGuest.GuestRoom.RoomNumber} reserved for {newGuest.GuestName} successfully\n" +
+                              $"with total cost: {newGuest.TotalCosts}");
             Additional.HoldScreen();//to hold the screen ...
         }
+        //to view all reservations with total cost
+        public static void ViewAllReservations()
+        {
+            //to check if there are no reserve available ...
+            if (!GetReserve())
+            {
+                Additional.HoldScreen();//to hold the screen ...
+                return;
+            }
+            //to list all reservations ...
+            Console.WriteLine("List of all reservations:");
+            //to book memory place for the guest details ...
+            Guest guestDetails;
+            //to loop through all guests in the hotel ...
+            for (int i = 0; i < Program.HotelGuests.Count; i++) 
+            {
+                guestDetails = Program.HotelGuests[i];
+                Console.WriteLine(guestDetails.ToString());
+                Console.WriteLine("--------------------------------------------------");
+            }
+            Additional.HoldScreen();//to hold the screen ...
+        }
+        //to print ...
+        public override string ToString()
+        {
+            return $"GuestID: {GuestID}\n" +
+                   $"Guest Name: {GuestName}\n" +
+                   $"Guest Phone Number: {GuestPhoneNumber}\n" +
+                   $"Guest Number Of Nights: {NumberOfNights}\n" +
+                   $"Guest Room Number: {GuestRoom.RoomNumber}\n" +
+                   $"Guset Total Cost: {TotalCosts}";
+        }
+
+        //========================================================
         //4. class constructors ...
         public Guest()
         {
