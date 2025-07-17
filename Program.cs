@@ -39,6 +39,7 @@
                         Guest.ReserveRoomForGuest();
                         break;
                     case '4':
+                        Guest.ViewAllReservations();
                         break;
                     case '5':
                         break;
