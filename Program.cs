@@ -33,34 +33,17 @@
                         Room.AddNewRoom();
                         break;
                     case '2':
-                        Console.WriteLine("2");
-                        Additional.HoldScreen();
-                        //Guest.AddGuest();
+                        Room.ViewAllRooms();
                         break;
                     case '3':
-                        Console.WriteLine("3");
-                        Additional.HoldScreen();
-                        //Room.ShowRooms();
                         break;
                     case '4':
-                        Console.WriteLine("4");
-                        Additional.HoldScreen();
-                        //Guest.ShowGuests();
                         break;
                     case '5':
-                        Console.WriteLine("5");
-                        Additional.HoldScreen();
-                        //Room.ReserveRoom();
                         break;
                     case '6':
-                        Console.WriteLine("6");
-                        Additional.HoldScreen();
-                        //Guest.SearchReservation();
                         break;
                     case '7':
-                        Console.WriteLine("7");
-                        Additional.HoldScreen();
-                        //Room.CancelReservation();
                         break;
                     case '0':
                         exitFlag = true;
