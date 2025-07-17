@@ -152,6 +152,39 @@ namespace HotelSystemOOP
             }
             Additional.HoldScreen();//to hold the screen ...
         }
+        //to cancel a reservation by room number ...
+        public static void CancelReservationByRoomNumber()
+        {
+            //to check if there are no reserve available ...
+            if (!GetReserve())
+            {
+                Additional.HoldScreen();//to hold the screen ...
+                return;
+            }
+            //to get the room number to cancel reservation for ...
+            int roomNumber = Validation.IntValidation("room number to cancel reservation for");
+            //to find the guest by room number ...
+            Guest foundGuest = Program.HotelGuests.Find(g => g.GuestRoom.RoomNumber == roomNumber);
+            if (foundGuest != null)
+            {
+                //to confirm the cancellation ...
+                if (Additional.ConfirmAction("cancel reservation"))
+                {
+                    foundGuest.GuestRoom.IsAvailable = true; //to make the room available again
+                    Program.HotelGuests.Remove(foundGuest); //to remove the guest from the list
+                    Console.WriteLine($"Reservation for {foundGuest.GuestName} in room {roomNumber} cancelled successfully.");
+                }
+                else
+                {
+                    Console.WriteLine("Cancel process stoped.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No reservation found for this room number.");
+            }
+            Additional.HoldScreen();//to hold the screen ...
+        }
         //to print ...
         public override string ToString()
         {
