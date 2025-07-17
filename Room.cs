@@ -9,7 +9,7 @@ namespace HotelSystemOOP
     class Room
     {
         //1. class fields ...
-        public int RoomNumber = 0;
+        public static int RoomNumber = 0;
         public double RoomDailyPrice;
         public bool IsAvailable = true;
         //2. class properties ...
