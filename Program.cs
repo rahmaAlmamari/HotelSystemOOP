@@ -30,9 +30,7 @@
                 switch (choice)
                 {
                     case '1':
-                        Console.WriteLine("1");
-                        Additional.HoldScreen();
-                        //Room.AddRoom();
+                        Room.AddNewRoom();
                         break;
                     case '2':
                         Console.WriteLine("2");
