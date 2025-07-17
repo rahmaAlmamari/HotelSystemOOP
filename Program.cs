@@ -45,6 +45,7 @@
                         Guest.SearchReservationByGuestName();
                         break;
                     case '6':
+                        Guest.FindHighestPayingGuest();
                         break;
                     case '7':
                         break;
