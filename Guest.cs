@@ -105,6 +105,29 @@ namespace HotelSystemOOP
             }
             Additional.HoldScreen();//to hold the screen ...
         }
+        //to search reservation by guest name ...
+        public static void SearchReservationByGuestName()
+        {
+            //to check if there are no reserve available ...
+            if (!GetReserve())
+            {
+                Additional.HoldScreen();//to hold the screen ...
+                return;
+            }
+            //to get the guest name to search for ...
+            string guestName = Validation.StringNamingValidation("guest name to search for");
+            //to find the guest by name ...
+            Guest foundGuest = Program.HotelGuests.Find(g => g.GuestName == guestName);
+            if (foundGuest != null)
+            {
+                Console.WriteLine(foundGuest.ToString());
+            }
+            else
+            {
+                Console.WriteLine("No reservation found for this guest.");
+            }
+            Additional.HoldScreen();//to hold the screen ...
+        }
         //to print ...
         public override string ToString()
         {
