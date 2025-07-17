@@ -128,6 +128,30 @@ namespace HotelSystemOOP
             }
             Additional.HoldScreen();//to hold the screen ...
         }
+        //to find the highest-paying guest ...
+        public static void FindHighestPayingGuest()
+        {
+            //to check if there are no reserve available ...
+            if (!GetReserve())
+            {
+                Additional.HoldScreen();//to hold the screen ...
+                return;
+            }
+            //to find the highest-paying guest ...
+            Guest highestPayingGuest = Program.HotelGuests.OrderByDescending(g => g.TotalCosts).FirstOrDefault();
+            //.OrderByDescending(g => g.TotalCosts) ... to orders the guests by their total cost, from highest to lowest.
+            //.FirstOrDefault() ... to get the first guest in the ordered list, which is the highest-paying guest.
+            //this line of code will not change the order of the guests in the HotelGuests list.
+            if (highestPayingGuest != null)
+            {
+                Console.WriteLine($"Highest paying guest is: {highestPayingGuest.GuestName} with total cost: {highestPayingGuest.TotalCosts}");
+            }
+            else
+            {
+                Console.WriteLine("No reservations found.");
+            }
+            Additional.HoldScreen();//to hold the screen ...
+        }
         //to print ...
         public override string ToString()
         {
