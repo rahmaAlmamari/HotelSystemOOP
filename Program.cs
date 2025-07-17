@@ -8,7 +8,9 @@
         public static List<Guest> HotelGuests = new List<Guest>();
         static void Main(string[] args)
         {
-            
+            //to call welcome message method ...
+            Additional.WelcomeMessage("Hotel");
+
         }
     }
 }
