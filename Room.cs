@@ -104,7 +104,7 @@ namespace HotelSystemOOP
         {
             try
             {
-                using (StreamWriter writer = new StreamWriter(filePath, true))
+                using (StreamWriter writer = new StreamWriter(filePath))
                 {
                     foreach (Room room in Program.HotelRooms)
                     {
@@ -128,6 +128,8 @@ namespace HotelSystemOOP
             {
                 if (File.Exists(filePath))
                 {
+                    //to clear the previous room details ...
+                    Program.HotelRooms.Clear();
                     //int count = 0;
                     using (StreamReader reader = new StreamReader(filePath))
                     {

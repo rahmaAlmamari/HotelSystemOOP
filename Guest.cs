@@ -119,7 +119,6 @@ namespace HotelSystemOOP
             {
                 guestDetails = Program.HotelGuests[i];
                 Console.WriteLine(guestDetails.ToString());
-                Console.WriteLine("--------------------------------------------------");
             }
             Additional.HoldScreen();//to hold the screen ...
         }
@@ -211,7 +210,7 @@ namespace HotelSystemOOP
                    $"Guest Phone Number: {GuestPhoneNumber}\n" +
                    $"Guest Number Of Nights: {NumberOfNights}\n" +
                    $"Guest Room Number: {GuestRoom.RoomNumber}\n" +
-                   $"Guset Total Cost: {TotalCosts}" +
+                   $"Guset Total Cost: {TotalCosts}\n" +
                    $"-----------------------------------------------";
         }
         //to save the guest details to a file ...
