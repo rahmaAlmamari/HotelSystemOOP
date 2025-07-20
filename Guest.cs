@@ -23,11 +23,24 @@ namespace HotelSystemOOP
             get { return GuestPhoneNumber; }
             set
             {
-                //to check if the phone number is 8 digits or not ...
-                if (value.ToString().Length == 8)
-                    GuestPhoneNumber = value;
-                else
-                    Console.WriteLine("Phone number must be 8 digits.");
+                bool FalgError = false; //to handle the error ...
+                do
+                {
+                    FalgError = false; //to reset the error flag ...
+                    //to check if the phone number is 8 digits or not ...
+                    if (value.ToString().Length == 8)
+                    {
+                        GuestPhoneNumber = value;
+                    }   
+                    else
+                    {
+                        Console.WriteLine("Phone number must be 8 digits.");
+                        value = Validation.IntValidation("guest phone number");
+                        FalgError = true; //to handle the error ...
+                    }
+                        
+                } while (FalgError);
+
             }
         }
 

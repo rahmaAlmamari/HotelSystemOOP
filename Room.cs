@@ -88,7 +88,6 @@ namespace HotelSystemOOP
                 //Console.WriteLine("--------------------------------------------------");
                 //to print the room details ...
                 Console.WriteLine(RoomDetails.ToString());
-                Console.WriteLine("--------------------------------------------------");
             }
             Additional.HoldScreen();//to hold the screen ...
         }
@@ -97,7 +96,8 @@ namespace HotelSystemOOP
         {
             return $"Room Number: {RoomNumber}\n" +
                    $"Room Daily Price: {P_RoomDailyPrice}\n" +
-                   $"Room Is Available: {IsAvailable}\n";
+                   $"Room Is Available: {IsAvailable}\n" +
+                   $"------------------------------------------";
         }
         //to save the room details to a file ...
         public static void SaveRoomDetailsToFile()
@@ -128,29 +128,35 @@ namespace HotelSystemOOP
             {
                 if (File.Exists(filePath))
                 {
+                    int count = 0;
                     using (StreamReader reader = new StreamReader(filePath))
                     {
-                        string line;
-                        while ((line = reader.ReadLine()) != null)
+                        while (!reader.EndOfStream)
                         {
-                            // Assuming the file format matches the ToString() output
-                            string[] parts = line.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                            if (parts.Length >= 3)
+                            string line1 = reader.ReadLine(); // Room Number
+                            string line2 = reader.ReadLine(); // Room Daily Price
+                            string line3 = reader.ReadLine(); // IsAvailable
+                            string separator = reader.ReadLine(); // Separator (e.g. "----")
+
+                            if (line1 != null && line2 != null && line3 != null)
                             {
                                 Room room = new Room();
-                                room.RoomNumber = int.Parse(parts[0].Split(':')[1].Trim());
-                                room.P_RoomDailyPrice = double.Parse(parts[1].Split(':')[1].Trim());
-                                room.IsAvailable = bool.Parse(parts[2].Split(':')[1].Trim());
-                                Program.HotelRooms.Add(room);
+                                room.RoomNumber = int.Parse(line1.Split(':')[1].Trim());
+                                room.P_RoomDailyPrice = double.Parse(line2.Split(':')[1].Trim());
+                                room.IsAvailable = bool.Parse(line3.Split(':')[1].Trim());
+
                                 //code explaintion:
                                 //parts[0] => "Room Number: 101"
                                 //parts[0].Split(':') => ["Room Number", " 101"]
                                 //parts[0].Split(':')[1] => " 101"
                                 //parts[0].Split(':')[1].Trim() => "101" ... Trim() to remove any leading or trailing spaces
+
+                                Program.HotelRooms.Add(room);
+                                count++;
                             }
                         }
                     }
-                    Console.WriteLine("Hotel room details loaded successfully.");
+                    Console.WriteLine("Hotel room details loaded successfully." + count);
                     Additional.HoldScreen();//just to hold second ...
                 }
                 else
@@ -165,6 +171,8 @@ namespace HotelSystemOOP
                 Additional.HoldScreen();//just to hold second ...
             }
         }
+
+
 
         //=====================================================================
         //4. class constructors ...
