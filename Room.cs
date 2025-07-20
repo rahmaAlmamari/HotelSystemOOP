@@ -93,7 +93,7 @@ namespace HotelSystemOOP
         public Room() 
         {
             RoomCounter++;
-            RoomNumber = RoomCounter; // Assign a unique room number
+            RoomNumber = RoomCounter + 100; // Assign a unique room number
         }
     }
 }
