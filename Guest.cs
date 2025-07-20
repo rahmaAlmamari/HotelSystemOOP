@@ -16,6 +16,8 @@ namespace HotelSystemOOP
         public int NumberOfNights;
         public Room GuestRoom;
         public double TotalCosts;
+        public DateOnly CheckIn;
+        public DateOnly CheckOut;
 
         //to hold file path for saving guest details ...
         public static string filePath = "guests.txt";
@@ -48,6 +50,47 @@ namespace HotelSystemOOP
             }
         }
 
+        public DateOnly P_CheckIn
+        {
+            get { return CheckIn; }
+            set
+            {
+                bool FalgError = false; //to handle the error ...
+                do
+                {
+                    FalgError = false;
+                    //to check if the check-in date is in the future or today ...
+                    if (value < DateOnly.FromDateTime(DateTime.Now))
+                    {
+                        Console.WriteLine("Check-in date must be today or in the future.");
+                        value = Validation.DateOnlyValidation("check-in date");
+                        FalgError = true; //to handle the error ...
+                    }
+                    CheckIn = value;
+                } while (FalgError);
+
+            }
+        }
+        public DateOnly P_CheckOut
+        {
+            get { return CheckOut; }
+            set
+            {
+                bool FalgError = false; //to handle the error ...
+                do
+                {
+                    FalgError = false;
+                    //to check if the check-out date is after the check-in date ...
+                    if (value <= CheckIn)
+                    {
+                        Console.WriteLine("Check-out date must be after check-in date.");
+                        value = Validation.DateOnlyValidation("check-out date");
+                        FalgError = true; //to handle the error ...
+                    }
+                    CheckOut = value;
+                } while (FalgError);
+            }
+        }
         //=======================================================
         //3. class methods ...
         //to check if their are reserve in the system or not ...
@@ -95,6 +138,8 @@ namespace HotelSystemOOP
             newGuest.GuestRoom.IsAvailable = false;
             //to get total cost ...
             newGuest.TotalCosts = newGuest.NumberOfNights * newGuest.GuestRoom.RoomDailyPrice;
+            newGuest.CheckIn = Validation.DateOnlyValidation("check in date");
+            newGuest.CheckOut = Validation.DateOnlyValidation("check out date");
             //to save the reserve to HotelGuest list ...
             Program.HotelGuests.Add(newGuest);
             Console.WriteLine($"Room {newGuest.GuestRoom.RoomNumber} reserved for {newGuest.GuestName} successfully\n" +
