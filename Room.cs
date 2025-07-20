@@ -84,7 +84,7 @@ namespace HotelSystemOOP
         public override string ToString()
         {
             return $"Room Number: {RoomNumber}\n" +
-                   $"Room Daily Price: {RoomDailyPrice}\n" +
+                   $"Room Daily Price: {P_RoomDailyPrice}\n" +
                    $"Room Is Available: {IsAvailable}\n";
         }
 
