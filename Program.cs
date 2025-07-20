@@ -55,7 +55,10 @@
                     case '0':
                         exitFlag = true;
                         Console.WriteLine("Thank you for using the Hotel System. Goodbye!");
+                        // Save room details to file before exiting ...
                         Room.SaveRoomDetailsToFile();
+                        // Save guest details to file before exiting ...
+                        Guest.SaveGuestDetailsToFile();
                         break;
                     default:
                         Console.WriteLine("Invalid option, please try again.");
