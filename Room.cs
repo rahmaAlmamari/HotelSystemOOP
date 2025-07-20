@@ -15,7 +15,7 @@ namespace HotelSystemOOP
         public bool IsAvailable = true;
 
         //to hold the file path for saving room details ...
-        public string filePath = "rooms.txt";
+        public static string filePath = "rooms.txt";
 
         //======================================================================
         //2. class properties ...
@@ -91,12 +91,26 @@ namespace HotelSystemOOP
                    $"Room Is Available: {IsAvailable}\n";
         }
         //to save the room details to a file ...
-        public void SaveRoomDetailsToFile()
+        public static void SaveRoomDetailsToFile()
         {
-            using (StreamWriter writer = new StreamWriter(filePath, true))
+            try
             {
-                writer.WriteLine(ToString());
+                using (StreamWriter writer = new StreamWriter(filePath, true))
+                {
+                    foreach (Room room in Program.HotelRooms)
+                    {
+                        writer.WriteLine(room.ToString());
+                    }
+                }
+                Console.WriteLine("Hotel room details saved successfully.");
+                Additional.HoldScreen();//just to hold second ...
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error saving room details: " + ex.Message);
+                Additional.HoldScreen();//just to hold second ...
+            }
+
         }
 
         //=====================================================================
