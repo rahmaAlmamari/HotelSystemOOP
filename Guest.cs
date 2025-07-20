@@ -10,7 +10,7 @@ namespace HotelSystemOOP
     class Guest
     {
         //1. class fields ...
-        public int GuestID = 0;
+        public static int GuestID = 0;
         public string GuestName;
         public int GuestPhoneNumber;
         public int NumberOfNights;
