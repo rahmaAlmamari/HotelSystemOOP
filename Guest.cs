@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotelSystemOOP
 {
+    //this class deals with the guest details and reservations in the hotel system ...
     class Guest
     {
         //1. class fields ...
@@ -15,6 +16,9 @@ namespace HotelSystemOOP
         public int NumberOfNights;
         public Room GuestRoom;
         public double TotalCosts;
+
+        //to hold file path for saving guest details ...
+        public static string filePath = "guests.txt";
 
         //=======================================================
         //2. class properties ...
@@ -208,6 +212,17 @@ namespace HotelSystemOOP
                    $"Guest Number Of Nights: {NumberOfNights}\n" +
                    $"Guest Room Number: {GuestRoom.RoomNumber}\n" +
                    $"Guset Total Cost: {TotalCosts}";
+        }
+        //to save the guest details to a file ...
+        public static void SaveGuestDetailsToFile()
+        {
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                foreach (Guest guest in Program.HotelGuests)
+                {
+                    writer.WriteLine(guest.ToString());
+                }
+            }
         }
 
         //========================================================
