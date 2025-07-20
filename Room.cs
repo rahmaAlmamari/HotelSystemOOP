@@ -14,6 +14,9 @@ namespace HotelSystemOOP
         public double RoomDailyPrice;
         public bool IsAvailable = true;
 
+        //to hold the file path for saving room details ...
+        public string filePath = "rooms.txt";
+
         //======================================================================
         //2. class properties ...
         public double P_RoomDailyPrice
@@ -86,6 +89,14 @@ namespace HotelSystemOOP
             return $"Room Number: {RoomNumber}\n" +
                    $"Room Daily Price: {P_RoomDailyPrice}\n" +
                    $"Room Is Available: {IsAvailable}\n";
+        }
+        //to save the room details to a file ...
+        public void SaveRoomDetailsToFile()
+        {
+            using (StreamWriter writer = new StreamWriter(filePath, true))
+            {
+                writer.WriteLine(ToString());
+            }
         }
 
         //=====================================================================
