@@ -24,11 +24,20 @@ namespace HotelSystemOOP
             get { return RoomDailyPrice; }
             set
             {
-                if (value < 100)
+                //to check if the room daily price is less than 100 or not ...
+                bool FlagError = false; //to handle the error ...
+                do
                 {
-                    throw new ArgumentException("Room daily price must be > 100.");
-                }
-                RoomDailyPrice = value;
+                    FlagError = false; //to reset the error flag ...
+                    if (value < 100)
+                    {
+                        Console.WriteLine("Room daily price must be > 100.");
+                        value = Validation.DoubleValidation("daily price");
+                        FlagError = true; //to handle the error ...
+                    }
+                    RoomDailyPrice = value;
+                } while (FlagError);
+
             }
         }
 
