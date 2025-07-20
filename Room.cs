@@ -128,7 +128,7 @@ namespace HotelSystemOOP
             {
                 if (File.Exists(filePath))
                 {
-                    int count = 0;
+                    //int count = 0;
                     using (StreamReader reader = new StreamReader(filePath))
                     {
                         while (!reader.EndOfStream)
@@ -152,11 +152,11 @@ namespace HotelSystemOOP
                                 //parts[0].Split(':')[1].Trim() => "101" ... Trim() to remove any leading or trailing spaces
 
                                 Program.HotelRooms.Add(room);
-                                count++;
+                                //count++;
                             }
                         }
                     }
-                    Console.WriteLine("Hotel room details loaded successfully." + count);
+                    Console.WriteLine("Hotel room details loaded successfully.");
                     Additional.HoldScreen();//just to hold second ...
                 }
                 else
