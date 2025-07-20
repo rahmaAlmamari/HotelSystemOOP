@@ -70,6 +70,7 @@ namespace HotelSystemOOP
             if (newGuest.GuestRoom == null || !newGuest.GuestRoom.IsAvailable)
             {
                 Console.WriteLine("Room not found or not available.");
+                Additional.HoldScreen();//to hold the screen ...
                 return;
             }
             
@@ -117,7 +118,7 @@ namespace HotelSystemOOP
             //to get the guest name to search for ...
             string guestName = Validation.StringNamingValidation("guest name to search for");
             //to find the guest by name ...
-            Guest foundGuest = Program.HotelGuests.Find(g => g.GuestName == guestName);
+            Guest foundGuest = Program.HotelGuests.Find(g => g.GuestName.ToLower() == guestName.ToLower());
             if (foundGuest != null)
             {
                 Console.WriteLine(foundGuest.ToString());
