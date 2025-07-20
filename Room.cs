@@ -16,6 +16,18 @@ namespace HotelSystemOOP
 
         //======================================================================
         //2. class properties ...
+        public double P_RoomDailyPrice
+        {
+            get { return RoomDailyPrice; }
+            set
+            {
+                if (value < 100)
+                {
+                    throw new ArgumentException("Room daily price must be > 100.");
+                }
+                RoomDailyPrice = value;
+            }
+        }
 
         //======================================================================
         //3. class methods ...
