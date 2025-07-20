@@ -121,6 +121,50 @@ namespace HotelSystemOOP
             }
 
         }
+        //to load room details from a file ...
+        public static void LoadRoomDetailsFromFile()
+        {
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    using (StreamReader reader = new StreamReader(filePath))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            // Assuming the file format matches the ToString() output
+                            string[] parts = line.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                            if (parts.Length >= 3)
+                            {
+                                Room room = new Room();
+                                room.RoomNumber = int.Parse(parts[0].Split(':')[1].Trim());
+                                room.P_RoomDailyPrice = double.Parse(parts[1].Split(':')[1].Trim());
+                                room.IsAvailable = bool.Parse(parts[2].Split(':')[1].Trim());
+                                Program.HotelRooms.Add(room);
+                                //code explaintion:
+                                //parts[0] => "Room Number: 101"
+                                //parts[0].Split(':') => ["Room Number", " 101"]
+                                //parts[0].Split(':')[1] => " 101"
+                                //parts[0].Split(':')[1].Trim() => "101" ... Trim() to remove any leading or trailing spaces
+                            }
+                        }
+                    }
+                    Console.WriteLine("Hotel room details loaded successfully.");
+                    Additional.HoldScreen();//just to hold second ...
+                }
+                else
+                {
+                    Console.WriteLine("No saved room details found.");
+                    Additional.HoldScreen();//just to hold second ...
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error loading room details: " + ex.Message);
+                Additional.HoldScreen();//just to hold second ...
+            }
+        }
 
         //=====================================================================
         //4. class constructors ...
