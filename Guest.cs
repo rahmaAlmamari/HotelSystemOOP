@@ -124,12 +124,29 @@ namespace HotelSystemOOP
             newGuest.GuestName = Validation.StringNamingValidation("guest name");
             newGuest.P_GuestPhoneNumber = Validation.IntValidation("guest phone number");
             newGuest.NumberOfNights = Validation.IntValidation("number of nights");
+            newGuest.P_CheckIn = Validation.DateOnlyValidation("check in date");
+            newGuest.P_CheckOut = Validation.DateOnlyValidation("check out date");
             int roomNumber = Validation.IntValidation("room number");
             //to find the room by room number ...
             newGuest.GuestRoom = Program.HotelRooms.Find(r => r.RoomNumber == roomNumber);
-            if (newGuest.GuestRoom == null || !newGuest.GuestRoom.IsAvailable)
+            //to check the checkIn and checkOut date ...
+            //DateOnly R_checkIn = Program.HotelGuests
+            //    .Where(g => g.GuestRoom.RoomNumber == roomNumber)
+            //    .Select(g => g.P_CheckIn)
+            //    .FirstOrDefault();
+            DateOnly Old_checkOut = Program.HotelGuests
+                 .Where(g => g.GuestRoom.RoomNumber == roomNumber)
+                .Select(g => g.P_CheckOut)
+                .FirstOrDefault();
+            if (newGuest.GuestRoom == null)
             {
-                Console.WriteLine("Room not found or not available.");
+                Console.WriteLine("Room not found.");
+                Additional.HoldScreen();//to hold the screen ...
+                return;
+            }
+            else if (newGuest.P_CheckIn <= Old_checkOut || newGuest.P_CheckOut <= Old_checkOut)
+            {
+                Console.WriteLine("Room is not available for the selected dates.");
                 Additional.HoldScreen();//to hold the screen ...
                 return;
             }
@@ -138,8 +155,6 @@ namespace HotelSystemOOP
             newGuest.GuestRoom.IsAvailable = false;
             //to get total cost ...
             newGuest.TotalCosts = newGuest.NumberOfNights * newGuest.GuestRoom.RoomDailyPrice;
-            newGuest.CheckIn = Validation.DateOnlyValidation("check in date");
-            newGuest.CheckOut = Validation.DateOnlyValidation("check out date");
             //to save the reserve to HotelGuest list ...
             Program.HotelGuests.Add(newGuest);
             Console.WriteLine($"Room {newGuest.GuestRoom.RoomNumber} reserved for {newGuest.GuestName} successfully\n" +
@@ -303,7 +318,7 @@ namespace HotelSystemOOP
                             if (line1 != null && line2 != null && line3 != null && line4 != null && line5 != null && line6 != null)
                             {
                                 Guest guest = new Guest();
-                                guest.GuestID = int.Parse(line1.Split(':')[1].Trim());
+                                Guest.GuestID = int.Parse(line1.Split(':')[1].Trim());
                                 guest.GuestName = line2.Split(':')[1].Trim();
                                 guest.P_GuestPhoneNumber = int.Parse(line3.Split(':')[1].Trim());
                                 guest.NumberOfNights = int.Parse(line4.Split(':')[1].Trim());
