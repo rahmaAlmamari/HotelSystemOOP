@@ -46,7 +46,7 @@ namespace HotelSystemOOP
         public static void AddNewRoom()
         {
             Room newRoom = new Room();
-            newRoom.RoomDailyPrice = Validation.DoubleValidation("daily price");
+            newRoom.P_RoomDailyPrice = Validation.DoubleValidation("daily price");
             Program.HotelRooms.Add(newRoom);
             //Console.WriteLine($"Room {newRoom.RoomNumber} added successfully with daily price {newRoom.RoomDailyPrice}");
             Console.WriteLine("Room add successfully with following details:");
