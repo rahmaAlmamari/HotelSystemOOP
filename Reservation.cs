@@ -17,6 +17,16 @@ namespace HotelSystemOOP
 
         //2. class Reservation properity ...
         //3. class Reservation method ...
+        //to print the reservation details ...
+        public static void PrintReservationDetails()
+        {
+            Console.WriteLine($"Reservation ID: {ReservationId}\n" +
+                              $"Guest ID: {GuestID}\n" +
+                              $"Check-In Date: {CheckIn}\n" +
+                              $"Check-Out Date: {CheckOut}\n" +
+                              $"---------------------------------------");
+
+        }
         //4. class Reservation constructor ...
         public Reservation()
         {
