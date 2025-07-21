@@ -266,27 +266,76 @@ namespace HotelSystemOOP
             }
             //to get the room number to cancel reservation for ...
             int roomNumber = Validation.IntValidation("room number to cancel reservation for");
-            //to find the guest by room number ...
-            Guest foundGuest = Program.HotelGuests.Find(g => g.GuestRoom.RoomNumber == roomNumber);
-            if (foundGuest != null)
+            //to list all reservations for the room number ...
+            List<Reservation> reservations = GetReservationsByRoomNumber(roomNumber);
+            if (reservations.Count == 0)
             {
-                //to confirm the cancellation ...
-                if (Additional.ConfirmAction("cancel reservation"))
-                {
-                    foundGuest.GuestRoom.IsAvailable = true; //to make the room available again
-                    Program.HotelGuests.Remove(foundGuest); //to remove the guest from the list
+                Console.WriteLine("No reservations found for this room number.");
+                Additional.HoldScreen();//to hold the screen ...
+                return;
+            }
+            Console.WriteLine($"Reservations for room number {roomNumber}:");
+            for(int i = 0; i < reservations.Count; i++)
+            {
+                reservations[i].PrintReservationDetails();
+            }
+            //to get reservation id ...
+            int ResevrationId = Validation.IntValidation("reseration id");
+            //to find reservation by id ...
+            Reservation CanselReservation = reservations.Find(r => r.ReservationId == ResevrationId);
+            if (CanselReservation != null) 
+            {
+                Console.WriteLine("Sorry ... this resevation not found.");
+                Additional.HoldScreen();
+                return;
+            }
+            //to confirm the cancellation ...
+            bool confirmCancellation = Additional.ConfirmAction("cancel reservation");
+            if(confirmCancellation)
+            {
+                //to find the guest by reservation id ...
+                Guest foundGuest = Program.HotelGuests.Find(g => g.GuestID == CanselReservation.GuestID);
+                if (foundGuest != null) {
+                    //to make the room available again ...
+                    foundGuest.GuestRoom.IsAvailable = true;
+                    //to remove the guest from the list ...
+                    Program.HotelGuests.Remove(foundGuest);
+                    //to remove the reservation from the room reservations list ...
+                    int roomIndex = Program.HotelRooms.FindIndex(r => r.RoomNumber == roomNumber);
+                    if (roomIndex != -1)
+                    {
+                        Program.HotelRooms[roomIndex].RoomReservations.Remove(CanselReservation);
+                    }
                     Console.WriteLine($"Reservation for {foundGuest.GuestName} in room {roomNumber} cancelled successfully.");
+                    Additional.HoldScreen();//to hold the screen ...
                 }
                 else
                 {
-                    Console.WriteLine("Cancel process stoped.");
+                    Console.WriteLine("No reservation found for this room number.");
+                    Additional.HoldScreen();//to hold the screen ...
                 }
             }
-            else
-            {
-                Console.WriteLine("No reservation found for this room number.");
-            }
-            Additional.HoldScreen();//to hold the screen ...
+            //to find the guest by room number ...
+            //Guest foundGuest = Program.HotelGuests.Find(g => g.GuestRoom.RoomNumber == roomNumber);
+            //if (foundGuest != null)
+            //{
+            //    //to confirm the cancellation ...
+            //    if (Additional.ConfirmAction("cancel reservation"))
+            //    {
+            //        foundGuest.GuestRoom.IsAvailable = true; //to make the room available again
+            //        Program.HotelGuests.Remove(foundGuest); //to remove the guest from the list
+            //        Console.WriteLine($"Reservation for {foundGuest.GuestName} in room {roomNumber} cancelled successfully.");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Cancel process stoped.");
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine("No reservation found for this room number.");
+            //}
+            //Additional.HoldScreen();//to hold the screen ...
         }
         //to print ...
         public override string ToString()
@@ -384,6 +433,16 @@ namespace HotelSystemOOP
         {
             return !room.RoomReservations.Any(r =>
                 newCheckIn < r.CheckOut && newCheckOut > r.CheckIn);
+        }
+        //to find the all reservations for a specific room using RoomNumber...
+        public static List<Reservation> GetReservationsByRoomNumber(int roomNumber)
+        {
+            Room room = Program.HotelRooms.Find(r => r.RoomNumber == roomNumber);
+            if (room != null)
+            {
+                return room.RoomReservations;
+            }
+            return new List<Reservation>();
         }
 
         //========================================================
