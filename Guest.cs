@@ -283,7 +283,7 @@ namespace HotelSystemOOP
             int ResevrationId = Validation.IntValidation("reseration id");
             //to find reservation by id ...
             Reservation CanselReservation = reservations.Find(r => r.ReservationId == ResevrationId);
-            if (CanselReservation != null) 
+            if (CanselReservation == null) 
             {
                 Console.WriteLine("Sorry ... this resevation not found.");
                 Additional.HoldScreen();
