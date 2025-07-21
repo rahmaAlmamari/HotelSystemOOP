@@ -10,7 +10,8 @@ namespace HotelSystemOOP
     class Guest
     {
         //1. class fields ...
-        public static int GuestID = 0;
+        public static int GuestCounter = 0; //to count the number of guests ...
+        public int GuestID;
         public string GuestName;
         public int GuestPhoneNumber;
         public int NumberOfNights;
@@ -129,42 +130,59 @@ namespace HotelSystemOOP
             int roomNumber = Validation.IntValidation("room number");
             //to find the room by room number ...
             newGuest.GuestRoom = Program.HotelRooms.Find(r => r.RoomNumber == roomNumber);
-            //to check the checkIn and checkOut date...
-            DateOnly Old_checkIn = Program.HotelGuests
-                .Where(g => g.GuestRoom.RoomNumber == roomNumber)
-                .Select(g => g.P_CheckIn)
-                .FirstOrDefault();
-            DateOnly Old_checkOut = Program.HotelGuests
-                 .Where(g => g.GuestRoom.RoomNumber == roomNumber)
-                .Select(g => g.P_CheckOut)
-                .FirstOrDefault();
             if (newGuest.GuestRoom == null)
             {
                 Console.WriteLine("Room not found.");
                 Additional.HoldScreen();//to hold the screen ...
                 return;
             }
+
+            //to check the checkIn and checkOut date...
+            //DateOnly Old_checkIn = Program.HotelGuests
+            //    .Where(g => g.GuestRoom.RoomNumber == roomNumber)
+            //    .Select(g => g.P_CheckIn)
+            //    .FirstOrDefault();
+            //DateOnly Old_checkOut = Program.HotelGuests
+            //     .Where(g => g.GuestRoom.RoomNumber == roomNumber)
+            //    .Select(g => g.P_CheckOut)
+            //    .FirstOrDefault();
             //else if (newGuest.P_CheckIn <= Old_checkOut || newGuest.P_CheckOut <= Old_checkOut)
             //{
             //    Console.WriteLine("Room is not available for the selected dates.");
             //    Additional.HoldScreen();//to hold the screen ...
             //    return;
             //}
-            else if ((newGuest.P_CheckIn <= Old_checkOut && newGuest.P_CheckOut >= Old_checkOut) 
-                     || (newGuest.P_CheckIn >= Old_checkIn && newGuest.P_CheckOut >= Old_checkOut) 
-                     || (newGuest.P_CheckIn <= Old_checkIn && newGuest.P_CheckOut >= Old_checkIn))
+            //else if ((newGuest.P_CheckIn <= Old_checkOut && newGuest.P_CheckOut >= Old_checkOut) 
+            //         || (newGuest.P_CheckIn >= Old_checkIn && newGuest.P_CheckOut >= Old_checkOut) 
+            //         || (newGuest.P_CheckIn <= Old_checkIn && newGuest.P_CheckOut >= Old_checkIn))
+            //{
+            //    Console.WriteLine("Room is not available for the selected dates.");
+            //    Additional.HoldScreen();//to hold the screen ...
+            //    return;
+            //}
+            bool isAvailable = newGuest.IsRoomAvailable(newGuest.GuestRoom, newGuest.P_CheckIn, newGuest.P_CheckOut);
+            if (!isAvailable)
             {
                 Console.WriteLine("Room is not available for the selected dates.");
                 Additional.HoldScreen();//to hold the screen ...
                 return;
             }
-            
             //to reserve the room for the guest ...
             newGuest.GuestRoom.IsAvailable = false;
             //to get total cost ...
             newGuest.TotalCosts = newGuest.NumberOfNights * newGuest.GuestRoom.RoomDailyPrice;
             //to save the reserve to HotelGuest list ...
             Program.HotelGuests.Add(newGuest);
+            //to find room index in HotelRoom list ...
+            int RoomIndex = Program.HotelRooms.FindIndex(r => r.RoomNumber == roomNumber);
+            //to save the new reservation to the RoomReservations in the list ...
+            Program.HotelRooms[RoomIndex].RoomReservations.Add(new Reservation()
+            {
+                GuestID = newGuest.GuestID,
+                CheckIn = newGuest.P_CheckIn,
+                CheckOut = newGuest.P_CheckOut
+            });
+
             Console.WriteLine($"Room {newGuest.GuestRoom.RoomNumber} reserved for {newGuest.GuestName} successfully\n" +
                               $"with total cost: {newGuest.TotalCosts}");
             Additional.HoldScreen();//to hold the screen ...
@@ -326,7 +344,7 @@ namespace HotelSystemOOP
                             if (line1 != null && line2 != null && line3 != null && line4 != null && line5 != null && line6 != null)
                             {
                                 Guest guest = new Guest();
-                                Guest.GuestID = int.Parse(line1.Split(':')[1].Trim());
+                                guest.GuestID = int.Parse(line1.Split(':')[1].Trim());
                                 guest.GuestName = line2.Split(':')[1].Trim();
                                 guest.P_GuestPhoneNumber = int.Parse(line3.Split(':')[1].Trim());
                                 guest.NumberOfNights = int.Parse(line4.Split(':')[1].Trim());
@@ -361,12 +379,19 @@ namespace HotelSystemOOP
                 Additional.HoldScreen();//just to hold second ...
             }
         }
+        //to check if a room is available for reservation ...
+        public bool IsRoomAvailable(Room room, DateOnly newCheckIn, DateOnly newCheckOut)
+        {
+            return !room.RoomReservations.Any(r =>
+                newCheckIn < r.CheckOut && newCheckOut > r.CheckIn);
+        }
 
         //========================================================
         //4. class constructors ...
         public Guest()
         {
-            GuestID++;
+            GuestCounter++;
+            GuestID = GuestCounter; //to set the guest ID ...
         }
     }
 }
