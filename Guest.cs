@@ -112,7 +112,7 @@ namespace HotelSystemOOP
             {
                 Additional.HoldScreen();//to hold the screen ...
                 return;
-            }
+            } 
             else //to list all rooms in the hotel ...
             {
                 Room.ViewAllRooms();
@@ -129,11 +129,11 @@ namespace HotelSystemOOP
             int roomNumber = Validation.IntValidation("room number");
             //to find the room by room number ...
             newGuest.GuestRoom = Program.HotelRooms.Find(r => r.RoomNumber == roomNumber);
-            //to check the checkIn and checkOut date ...
-            //DateOnly R_checkIn = Program.HotelGuests
-            //    .Where(g => g.GuestRoom.RoomNumber == roomNumber)
-            //    .Select(g => g.P_CheckIn)
-            //    .FirstOrDefault();
+            //to check the checkIn and checkOut date...
+            DateOnly Old_checkIn = Program.HotelGuests
+                .Where(g => g.GuestRoom.RoomNumber == roomNumber)
+                .Select(g => g.P_CheckIn)
+                .FirstOrDefault();
             DateOnly Old_checkOut = Program.HotelGuests
                  .Where(g => g.GuestRoom.RoomNumber == roomNumber)
                 .Select(g => g.P_CheckOut)
@@ -144,7 +144,15 @@ namespace HotelSystemOOP
                 Additional.HoldScreen();//to hold the screen ...
                 return;
             }
-            else if (newGuest.P_CheckIn <= Old_checkOut || newGuest.P_CheckOut <= Old_checkOut)
+            //else if (newGuest.P_CheckIn <= Old_checkOut || newGuest.P_CheckOut <= Old_checkOut)
+            //{
+            //    Console.WriteLine("Room is not available for the selected dates.");
+            //    Additional.HoldScreen();//to hold the screen ...
+            //    return;
+            //}
+            else if ((newGuest.P_CheckIn <= Old_checkOut && newGuest.P_CheckOut >= Old_checkOut) 
+                     || (newGuest.P_CheckIn >= Old_checkIn && newGuest.P_CheckOut >= Old_checkOut) 
+                     || (newGuest.P_CheckIn <= Old_checkIn && newGuest.P_CheckOut >= Old_checkIn))
             {
                 Console.WriteLine("Room is not available for the selected dates.");
                 Additional.HoldScreen();//to hold the screen ...
