@@ -14,7 +14,7 @@ namespace HotelSystemOOP
         public double RoomDailyPrice;
         public bool IsAvailable = true;
         //list to store the room reserveation ...
-        public static List<Reservation> RoomReservations = new List<Reservation>();
+        public List<Reservation> RoomReservations = new List<Reservation>();
 
         //to hold the file path for saving room details ...
         public static string filePath = "rooms.txt";
