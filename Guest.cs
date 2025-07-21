@@ -123,9 +123,9 @@ namespace HotelSystemOOP
             //to get the guest details ...
             newGuest.GuestName = Validation.StringNamingValidation("guest name");
             newGuest.P_GuestPhoneNumber = Validation.IntValidation("guest phone number");
-            newGuest.NumberOfNights = Validation.IntValidation("number of nights");
             newGuest.P_CheckIn = Validation.DateOnlyValidation("check in date");
             newGuest.P_CheckOut = Validation.DateOnlyValidation("check out date");
+            newGuest.NumberOfNights = newGuest.P_CheckOut.DayNumber - newGuest.P_CheckIn.DayNumber;
             int roomNumber = Validation.IntValidation("room number");
             //to find the room by room number ...
             newGuest.GuestRoom = Program.HotelRooms.Find(r => r.RoomNumber == roomNumber);
