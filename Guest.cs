@@ -390,9 +390,12 @@ namespace HotelSystemOOP
                             string line4 = reader.ReadLine(); // Guest Number Of Nights
                             string line5 = reader.ReadLine(); // Guest Room Number
                             string line6 = reader.ReadLine(); // IGuset Total Cost
+                            string line7 = reader.ReadLine(); // Check-In Date
+                            string line8 = reader.ReadLine(); // Check-Out Date
                             string separator = reader.ReadLine(); // Separator (e.g. "----")
 
-                            if (line1 != null && line2 != null && line3 != null && line4 != null && line5 != null && line6 != null)
+                            if (line1 != null && line2 != null && line3 != null && line4 != null
+                                && line5 != null && line6 != null && line7 != null && line8 != null)
                             {
                                 Guest guest = new Guest();
                                 guest.GuestID = int.Parse(line1.Split(':')[1].Trim());
@@ -411,6 +414,8 @@ namespace HotelSystemOOP
 
                                 }
                                 guest.TotalCosts = double.Parse(line6.Split(':')[1].Trim());
+                                guest.P_CheckIn = DateOnly.Parse(line7.Split(':')[1].Trim());
+                                guest.P_CheckOut = DateOnly.Parse(line8.Split(':')[1].Trim());
                                 Program.HotelGuests.Add(guest); // Add the guest to the list
                             }
                         }
