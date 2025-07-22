@@ -88,6 +88,8 @@ namespace HotelSystemOOP
                             }
                         }
                     }
+                    Console.WriteLine("Reservation details loaded from file successfully.");
+                    Additional.HoldScreen();//just to hold second ...
                 }
             }
             catch (Exception ex)
