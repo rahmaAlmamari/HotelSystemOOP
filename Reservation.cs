@@ -61,7 +61,6 @@ namespace HotelSystemOOP
             {
                 if (File.Exists(filePath))
                 {
-                    Program.HotelRooms.Clear();
                     using (StreamReader reader = new StreamReader(filePath))
                     {
                         while (!reader.EndOfStream)
@@ -83,7 +82,7 @@ namespace HotelSystemOOP
                                 if (guest != null)
                                 {
                                     Room room = Program.HotelRooms.FirstOrDefault(r => r.RoomNumber == guest.GuestRoom.RoomNumber);
-                                    room.RoomReservations.Add(reservation);
+                                    room.RoomReservations.Add(reservation); // Assuming each room has a list of reservations
                                 }
                             }
                         }
