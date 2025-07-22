@@ -54,6 +54,48 @@ namespace HotelSystemOOP
             }
 
         }
+        //to load Reservation details from file ...
+        public static void LoadReservationDetailsFromFile()
+        {
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    Program.HotelRooms.Clear();
+                    using (StreamReader reader = new StreamReader(filePath))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            string line1 = reader.ReadLine(); // Reservation Id
+                            string line2 = reader.ReadLine(); // Guest ID
+                            string line3 = reader.ReadLine(); // Check In Date
+                            string line4 = reader.ReadLine(); // Check Out Date
+                            string separator = reader.ReadLine(); // Separator (e.g. "----")
+                            if (line1 != null && line2 != null && line3 != null && line4 != null)
+                            {
+                                Reservation reservation = new Reservation();
+                                reservation.ReservationId = int.Parse(line1.Split(':')[1].Trim());
+                                reservation.GuestID = int.Parse(line2.Split(':')[1].Trim());
+                                reservation.CheckIn = DateOnly.Parse(line3.Split(':')[1].Trim());
+                                reservation.CheckOut = DateOnly.Parse(line4.Split(':')[1].Trim());
+                                // Add the reservation to the corresponding room's reservations list
+                                Guest guest = Program.HotelGuests.FirstOrDefault(r => r.GuestID == reservation.GuestID);
+                                if (guest != null)
+                                {
+                                    Room room = Program.HotelRooms.FirstOrDefault(r => r.RoomNumber == guest.GuestRoom.RoomNumber);
+                                    room.RoomReservations.Add(reservation);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading Reservation details from file: {ex.Message}");
+                Additional.HoldScreen();//just to hold second ...
+            }
+        }
         public void PrintReservationDetails()
         {
             Console.WriteLine($"Reservation ID: {ReservationId}\n" +
