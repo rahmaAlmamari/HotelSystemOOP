@@ -346,6 +346,8 @@ namespace HotelSystemOOP
                    $"Guest Number Of Nights: {NumberOfNights}\n" +
                    $"Guest Room Number: {GuestRoom.RoomNumber}\n" +
                    $"Guset Total Cost: {TotalCosts}\n" +
+                   $"Check-In Date: {CheckIn}\n" +
+                   $"Check-Out Date: {CheckOut}\n" +
                    $"-----------------------------------------------";
         }
         //to save the guest details to a file ...
